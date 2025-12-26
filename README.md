@@ -1,4 +1,4 @@
-# OpenCore Hackintosh for Tahoe 安装教程 & EFI for Matebook 14 2020
+# Hackintosh for Tahoe 教程 & EFI for Matebook 14 2020
 **最新消息：Tahoe 现已支持原生驱动网卡（Intel & 博通），并且支持隔空投送。本教程已更新，并对安装过程稍作修改。**
 
 （本教程仅适用于 Intel 芯片 + Intel 网卡，AMD 芯片 及 博通网卡 请移步其他教程）
