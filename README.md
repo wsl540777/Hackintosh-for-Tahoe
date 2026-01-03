@@ -1,4 +1,4 @@
-# Hackintosh Tahoe Guide & EFI for Matebook 14 2020 ｜ 黑苹果 Tahoe 教程 & EFI for Matebook 14 2020
+# Hackintosh Tahoe Guide & EFI for Matebook 14 2020 <br/> 黑苹果 Tahoe 教程 & EFI for Matebook 14 2020
 
 **12/25/25 Update: Tahoe now supports native Wi‑Fi drivers via patch (Intel & Broadcom) and partially supports AirDrop. This guide has been updated with slight changes to the installation process.**
 ## README.md
