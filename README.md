@@ -2,8 +2,8 @@
 
 **12/25/25 Update: Tahoe now supports native Wi‑Fi drivers via patch (Intel & Broadcom) and partially supports AirDrop. This guide has been updated with slight changes to the installation process.**
 ## README.md
-en-US English  
-zh-CN 简体中文
+[en-US English](https://github.com/wsl540777/Hackintosh-for-Tahoe/blob/main/README.md)  
+[zh-CN 简体中文](https://github.com/wsl540777/Hackintosh-for-Tahoe/blob/main/README_zh-CN.md)
 ## Overview
 This Hackintosh guide provides a reference for fresh installing or upgrading to macOS Tahoe. It only shares my experience and does NOT provide troubleshooting for any specific installation issues.
 
