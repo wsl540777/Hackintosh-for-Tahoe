@@ -1,8 +1,8 @@
 # 黑苹果 Tahoe 教程 & EFI for Matebook 14 2020
 **25/12/25 最新消息：Tahoe 现已通过补丁支持原生驱动网卡（Intel & 博通），并且部分支持隔空投送。本教程已更新，并对安装过程稍作修改。**
 ## README.md
-en-US English\
-zh-CN 简体中文
+[en-US English](https://github.com/wsl540777/Hackintosh-for-Tahoe/blob/main/README.md)\
+[zh-CN 简体中文](https://github.com/wsl540777/Hackintosh-for-Tahoe/blob/main/README_zh-CN.md)
 ## 教程说明
 本教程提供了全新安装和升级安装黑苹果 Tahoe 的流程参考。仅作经验分享，不提供安装过程中具体问题的解决指导。
 
