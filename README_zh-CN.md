@@ -1,8 +1,7 @@
 # 黑苹果 Tahoe 教程 & EFI for Matebook 14 2020
 **25/12/25 最新消息：Tahoe 现已通过补丁支持原生驱动网卡（Intel & 博通），并且部分支持隔空投送。本教程已更新，并对安装过程稍作修改。**
 ## README.md
-en-US English
-
+en-US English\
 zh-CN 简体中文
 ## 教程说明
 本教程提供了全新安装和升级安装黑苹果 Tahoe 的流程参考。仅作经验分享，不提供安装过程中具体问题的解决指导。
@@ -42,7 +41,7 @@ zh-CN 简体中文
 * 声卡 扬声器/麦克风/耳机输出（通过注入补丁驱动，耳麦暂不支持）
 * Siri
 * 自动填充 / 通行密钥
-* 连续互通**（仅限同一局域网）**：隔空投送（本 Mac -> 其它 Apple 设备）/ 接力/通用剪贴板（其它 Apple 设备 -> 本 Mac）/ 隔空播放 / 电话和短信转发 / 验证码
+* 连续互通（**仅限同一局域网**）：隔空投送（本 Mac -> 其它 Apple 设备）/ 接力/通用剪贴板（其它 Apple 设备 -> 本 Mac）/ 隔空播放 / 电话和短信转发 / 验证码
 * 连续互通（有线）：随航 / 插入速绘、照片和扫描件 / 智能热点
 * 定位服务/查找
 ### ❌ 不支持
@@ -112,7 +111,7 @@ zh-CN 简体中文
 1. **更改键盘按键映射**：`系统设置 > 键盘 > 键盘快捷键 > 修饰键`；
 2. **调整触控板点按方式：** `系统设置 > 触控板 > 光标与点按`，调整为自己熟悉的点按方式；
 3. **开启 HiDPI**（[教程](https://zhuanlan.zhihu.com/p/205279615)，SIP 状态已为注入声卡和网卡驱动设置好，**不用手动更改**）。**⚠️ 不支持的分辨率可能导致花屏**；
-4. **修复耳机电流声：**下载 [ComboJack.zip](https://github.com/hoaug-tran/ComboJack/releases)（适用于 ALC255/256/295/298），打开终端，将解压后 `ComboJack_Installer` 目录下的 `install.sh` 拖到终端中，回车运行，重启；
+4. **修复耳机电流声**：下载 [ComboJack.zip](https://github.com/hoaug-tran/ComboJack/releases)（适用于 ALC255/256/295/298），打开终端，将解压后 `ComboJack_Installer` 目录下的 `install.sh` 拖到终端中，回车运行，重启；
    1. **禁止自动挂载**非 macOS 分区（[教程](https://apple.stackexchange.com/questions/310574/how-to-prevent-auto-mounting-of-a-volume-in-macos-high-sierra)），宗卷名称中的空格用 `\040` 代替。如果不清楚文件系统名称，可用 `auto` 代替；
 5. 进入 `系统设置 > 隐私与安全性` **再次检查文件保险箱是否关闭**。**⚠️ 若在初次进入 macOS Tahoe 时不慎选择了启用文件保险箱加密，导致输入密码无法进入系统，可参考[这篇教程](https://imacos.top/2025/07/01/1457-3/)解决问题；如果解密过程卡在 Paused 状态，[这篇教程](https://kextcache.com/filevault-login-issue-fix/)文末有解决方案；**
 6. ⚠️ 本 EFI 中的**显卡缓冲帧补丁**、**CPUFriendDataProvider.kext** 和 **USBMap.kext** 为**机型定制**。**若本机机型或仿冒机型不同，请重新定制**。
