@@ -1,5 +1,5 @@
 # Hackintosh Tahoe Guide & EFI for Matebook 14 2020
-**12/25/25 Update: Tahoe now supports native Wi‑Fi drivers via system patch (Intel & Broadcom) and partially supports AirDrop. This guide has been updated with slight changes to the installation process.**
+>**12/25/25 Update: Tahoe now supports native Wi‑Fi drivers via system patch (Intel & Broadcom) and partially supports AirDrop. This guide has been updated with slight changes to the installation process.**
 
 ## README.md
 [en-US English](https://github.com/wsl540777/Hackintosh-for-Tahoe/blob/main/README.md)  
@@ -10,8 +10,8 @@ This Hackintosh guide provides a reference for installing macOS Tahoe, whether a
 
 **This guide ONLY applies to Intel CPUs + Intel Wi‑Fi cards. For AMD CPUs or Broadcom Wi‑Fi cards, please refer to other guides.**
 
-Note: `itlwm.kext` cannot work in **macOS Recovery** because it has no client, such as `Heliport`. However, **if you edit its configuration file in advance, the system will then be able to automatically connect to a chosen Wi‑Fi after boot.** 
-This solves the problem in Sequoia and later versions, where `AirportItlwm.kext` is no longer supported and Recovery system has no wireless networking. With this method, the entire installation process **requires only an EFI and a macOS Recovery image (under 1.5 GB)**—no need to search for full installers, download images, or create bootable media—making a clean Tahoe setup easier and more convenient.
+> Note: `itlwm.kext` cannot work in **macOS Recovery** because it has no client, such as `Heliport`. However, **if you edit its configuration file in advance, the system will then be able to automatically connect to a chosen Wi‑Fi after boot.** 
+>This solves the problem in Sequoia and later versions, where `AirportItlwm.kext` is no longer supported and Recovery system has no wireless networking. With this method, the entire installation process **requires only an EFI and a macOS Recovery image (under 1.5 GB)**—no need to search for full installers, download images, or create bootable media—making a clean Tahoe setup easier and more convenient.
 
 ## Target Machine for This EFI
 | Item | Details |
