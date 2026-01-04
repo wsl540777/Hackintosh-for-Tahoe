@@ -4,13 +4,12 @@
 [en-US English](https://github.com/wsl540777/Hackintosh-for-Tahoe/blob/main/README.md)\
 [zh-CN 简体中文](https://github.com/wsl540777/Hackintosh-for-Tahoe/blob/main/README_zh-CN.md)
 ## 教程说明
-本教程提供了全新安装和升级安装黑苹果 Tahoe 的流程参考。仅作经验分享，不提供安装过程中具体问题的解决指导。
+本教程提供了全新安装和升级安装黑苹果 Tahoe 过程的参考。仅作经验分享，不提供安装过程中产生问题的解决指导。
 
 **本教程仅适用于 Intel 芯片 + Intel 网卡，AMD 芯片 及 博通网卡 请移步其他教程。**
 
-备注：众所周知，由于缺乏网络配置客户端（如 `Heliport`），`itlwm.kext` 在 **macOS 恢复模式**中无法正常工作。不过，其实**只要提前修改其配置文件，就能让系统在启动后自动连接指定 Wi‑Fi**。这一方法有效解决了 Sequoia 及更新系统因不支持 `AirportItlwm.kext` 而导致**恢复模式**无法使用无线网络的问题。
-
-实现在线安装后，整个安装流程仅需准备 EFI 与不足 1.5GB 的恢复系统，无需再寻找镜像、下载镜像或制作启动盘，使全新安装 Tahoe 更加简单高效。
+备注：众所周知，由于缺乏网络配置客户端（如 `Heliport`），`itlwm.kext` 在 **macOS 恢复**中无法正常工作。不过，其实**只要提前修改其配置文件，就能让系统在启动后自动连接指定 Wi‑Fi**。
+这一方法有效解决了 Sequoia 及更新系统因不支持 `AirportItlwm.kext` 而导致**恢复模式**无法使用无线网络的问题。实现在线安装后，整个安装流程仅需准备 EFI 与不足 1.5GB 的恢复系统，无需再寻找镜像、下载镜像或制作启动盘，使全新安装 Tahoe 更加简单高效。
 
 **恢复模式在线安装 ≠ 恢复版镜像安装**
 
@@ -41,81 +40,82 @@
 * 声卡 扬声器/麦克风/耳机输出（通过注入补丁驱动，耳麦暂不支持）
 * Siri
 * 自动填充 / 通行密钥
-* 连续互通（**仅限同一局域网**）：隔空投送（本 Mac -> 其它 Apple 设备）/ 接力/通用剪贴板（其它 Apple 设备 -> 本 Mac）/ 隔空播放 / 电话和短信转发 / 验证码
-* 连续互通（有线）：随航 / 插入速绘、照片和扫描件 / 智能热点
+* **连续互通（仅限同一局域网**）：隔空投送（本 Mac -> 其它 Apple 设备）/ 接力/通用剪贴板（其它 Apple 设备 -> 本 Mac）/ 隔空播放 / 电话和短信转发 / 验证码
+* **连续互通（有线）**：随航 / 插入速绘、照片和扫描件 / 智能热点
 * 定位服务/查找
 ### ❌ 不支持
 * HDMI（原因未知，解决中）
 * 摄像头（解决方案：通过 [Camo Studio](https://camo.com/studio) 访问移动设备摄像头）
 * 指纹
 * MX350 独显
-* 连续互通：通用控制 / 连续互通相机 / iPhone 镜像 / 使用 Apple Watch 解锁 Mac
-* DRM 内容：Apple Music（**只有下载的 AAC 256 kbps 文件可播放**）/ Apple TV / Netflix / Amazon Prime / Disney+ 等
+* **连续互通**：通用控制 / 连续互通相机 / iPhone 镜像 / 使用 Apple Watch 解锁 Mac
+* **DRM 解码**：Apple Music（**只有下载的 AAC 256 kbps 文件可播放**）/ Apple TV / Netflix / Amazon Prime / Disney+ 等
 
 
 ## Tahoe 安装教程（Intel）
 * **访问和下载文件加速：[GitHub 文件加速代理](https://gh-proxy.com/)**
 ### 安装前
-1. ⚠️ **备份原有系统和 EFI 分区；**
+1. ⚠️ **备份原有系统和 EFI/ESP 分区；**
 2. 准备至少 1 个 空 U 盘；
 3. 准备适配机型的 EFI；
-4. 下载好 [itlwm.kext](https://github.com/OpenIntelWireless/itlwm/releases/tag/v2.3.0) 和 网卡驱动补丁包（[Intel 版](https://github.com/wsl540777/Hackintosh-for-Tahoe/releases/download/v26.2.1/Tahoe_Intel_Wi-Fi_Patch.zip)）。
-5. 使用 [OpenCore Auxiliary Tools \(OCAT\)](https://github.com/ic005k/OCAuxiliaryTools) 或 [OpenCore Configurator \(OCC\)](https://mackie100projects.altervista.org/category/opencore-configurator/) 注入三码（[教程](https://www.cnblogs.com/codtina/p/18314522)），将 itlwm.kext 添加到 `Kernel > Add`，并**确保 AirportItlwm.kext 不存在或已禁用**；
-6. **配置网络服务（使用有线网络可忽略）：** 通过文件资源管理器/访达找到 `EFI > OC > Kext > itlwm.kext（显示包内容）> Contents > Info.plist`。用记事本/文本编辑器打开，找到 WiFi_1，修改 **ssid** 和 **password** 对应的 string 值为要连接 Wi-Fi 的 **名称** 和 **密码**，保存退出。
+4. 下载好 [itlwm.kext](https://github.com/OpenIntelWireless/itlwm/releases/tag/v2.3.0)；
+5. 使用 [OpenCore Auxiliary Tools \(OCAT\)](https://github.com/ic005k/OCAuxiliaryTools) 或 [OpenCore Configurator \(OCC\)](https://mackie100projects.altervista.org/category/opencore-configurator/) 注入三码（[教程](https://www.cnblogs.com/codtina/p/18314522)），将 `itlwm.kext` 添加到 `Kernel > Add`，并**确保** `AirportItlwm.kext` **不存在或已禁用**；
+6. **配置网络服务（使用有线网络可忽略）：** 通过文件资源管理器/访达找到 `EFI > OC > Kext > itlwm.kext（显示包内容）> Contents > Info.plist`。用记事本/文本编辑器打开，找到 `WiFi_1`，修改 **`ssid`** 和 **`password`** 对应的 string 值为要连接 Wi-Fi 的 **名称** 和 **密码**，保存退出。
 ### 安装过程
 * #### 从 Windows 下开始全新安装：
-  * #### 方法一：使用官方 Recovery Boot 在线安装（仅需一个 U 盘，无需准备完整系统镜像）
+  * ##### 方法一：使用官方 Recovery Boot 在线安装（仅需一个 U 盘，无需准备完整系统镜像）
     1. **系统分区的准备**
-       1. ⚠️ **EFI 分区扩容至 300MB**（[教程](https://www.shuzhiduo.com/A/pRdBN2n6dn/)）。建议制作一个 U 盘启动盘，在 PE 下进行扩容（推荐 [HotPE](https://www.hotpe.top/)）；
+       1. ⚠️ **EFI/ESP 分区扩容至 300MB**（[教程](https://www.shuzhiduo.com/A/pRdBN2n6dn/)）。建议制作一个 U 盘启动盘，在 PE 下进行扩容（推荐 [HotPE](https://www.hotpe.top/)）；
        2. 创建 macOS 系统分区（不低于 60GB，长期使用建议至少160G，酌情安排）。分区格式随意，安装前会再次抹掉。
-    2. **恢复分区的准备**
+    2. **恢复系统的准备**
        1. 下载 [RecoveryOS.26.zip](https://github.com/wsl540777/Hackintosh-for-Tahoe/releases/download/v26.2.0/RecoveryBoot.26.zip)，解压得到 `com.apple.recovery.boot` 文件夹；
        2. U 盘创建一个 2G 的 FAT32 GUID 分区，根目录下放入 `com.apple.recovery.boot` 和准备的 `EFI` 文件夹；
     3. **使用恢复模式安装系统**
-       1. 重新启动，进入 BIOS 设置，关闭 **安全启动** 和 **安全芯片**（更多设置，参见[此文](https://apple.sqlsec.com/3-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/3-1/)）；
-       2. 选择刚才配置的 U 盘恢复分区启动， OpenCore 界面选择 **`Recovery 26.0 (Portable)`**；
-       3. 进入恢复分区后选择 **磁盘工具**， 将准备安装 macOS 的分区抹掉成 APFS 格式；
-       4. 退出磁盘工具，选择 **重新安装 macOS Tahoe**。如果能够看到用户协议，说明上一步的网络配置是成功的；
+       1. 重新启动，进入 BIOS 设置，关闭 **`安全启动`** 和 **`安全芯片`**（更多设置，请见[此文](https://apple.sqlsec.com/3-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/3-1/)）；
+       2. 选择刚才配置的 U 盘分区启动， OpenCore 启动界面选择 `Recovery 26.0 (Portable)`；
+       3. 进入恢复系统后选择 `磁盘工具`， 将准备的 macOS 分区抹掉成 APFS 格式；
+       4. 退出磁盘工具，选择 `重新安装 macOS Tahoe`。如果能够看到用户协议，说明上一步的网络配置是成功的；
        5. 选择刚才抹掉的系统盘，按照提示安装 macOS，期间可能会多次重启；
        6. 完成初次激活，**⚠️ 不要启用文件保险箱加密**；
     4. **拷贝 EFI 分区**
-       1. 重新启动，BIOS 选择进入 PE 系统，将 EFI 文件夹拷贝到电脑 EFI 分区；
+       1. 重新启动，BIOS 选择进入 PE 系统，将 `EFI` 文件夹拷贝到电脑 EFI/ESP 分区；
        2. 使用 [EasyUEFI](https://github.com/wsl540777/Hackintosh-for-Tahoe/releases/download/v26.2.0/EasyUEFI.zip) 添加引导项（[教程](https://www.bilibili.com/opus/872635104279658505)）；
-       3. 重新启动，拔掉 U 盘，BIOS 选择电脑 OpenCore 引导，进入 macOS。
-       4. 使用 [OCAT](https://github.com/ic005k/OCAuxiliaryTools) 或 [OCC](https://mackie100projects.altervista.org/category/opencore-configurator/) 挂载 EFI 分区，禁用或删除 itlwm.kext；下载安装并使用 [OCLP-Mod.pkg](https://github.com/laobamac/OCLP-Mod/releases) 注入声卡和网卡驱动补丁（[教程](https://b23.tv/R7wvPSn)），完成。
-  * #### 方法二：使用完整的系统镜像安装（至少需要两个 U 盘，且需要准备 .dmg 或 .iso 格式系统镜像）（[镜像下载地址](https://hackintosh.club/d/10000080)）
+       3. 重新启动，拔掉 U 盘，BIOS 选择 OpenCore 引导，进入 macOS。
+
+  * ##### 方法二：使用完整的系统镜像安装（至少需要两个 U 盘，且需要准备 .dmg 或 .iso 格式系统镜像）（[镜像下载地址](https://hackintosh.club/d/10000080)）
     1. **系统分区的准备**
-       1. ⚠️ **EFI 分区扩容**至 300MB（[教程](https://bbs.pcbeta.com/viewthread-1880061-1-1.html)）。建议制作一个 U 盘启动盘，在 PE 下进行扩容（推荐 [HotPE](https://www.hotpe.top/)）；
+       1. ⚠️ **EFI/ESP 分区扩容**至 300MB（[教程](https://bbs.pcbeta.com/viewthread-1880061-1-1.html)）。建议制作一个 U 盘启动盘，在 PE 下进行扩容（推荐 [HotPE](https://www.hotpe.top/)）；
        2. 创建 macOS 系统分区（不低于 60GB，长期使用建议至少160G，酌情安排）。分区格式随意，安装前会再次抹掉。
-    2. **安装盘的准备**
+    2. **安装盘的烧录**
        1. 用另一个 U 盘制作 macOS 安装介质（[教程](https://divineengine.net/article/macos-bootable-installer/)）；
-       2. 挂载安装盘的 EFI 分区，并将准备的 EFI 文件夹拷贝进去。（[教程](https://www.mfpud.com/topics/930/)）
+       2. 挂载安装盘的 EFI 分区，并将准备的 `EFI` 文件夹拷贝进去。（[教程](https://www.mfpud.com/topics/930/)）
     3. **安装系统**
-       1. 重新启动，进入 BIOS 设置，关闭 **安全启动** 和 **安全芯片**（更多设置，参见[此文](https://apple.sqlsec.com/3-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/3-1/)）；
-       2. 选择刚才配置的 U 盘安装盘启动，OpenCore 界面选择 **Install macOS Tahoe；**
-       3. 进入安装分区后选择 **磁盘工具**， 将准备安装 macOS 的分区抹掉成 APFS 格式；
-       4. 退出磁盘工具，选择 **安装 macOS Tahoe**；
+       1. 重新启动，进入 BIOS 设置，关闭 **`安全启动`** 和 **`安全芯片`**（更多设置，请见[此文](https://apple.sqlsec.com/3-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/3-1/)）；
+       2. 选择刚才的 U 盘安装盘启动，OpenCore 启动界面选择 `安装 macOS Tahoe`；
+       3. 进入安装分区后选择 `磁盘工具`， 将准备的 macOS 分区抹掉成 APFS 格式；
+       4. 退出磁盘工具，选择 `安装 macOS Tahoe`；
        5. 选择刚才抹掉的系统盘，按照提示安装 macOS，期间可能会多次重启；
        6. 完成初次激活，**⚠️ 不要启用文件保险箱加密**；
     4. **拷贝 EFI 分区**
-       1. 重新启动，BIOS 选择进入 PE 系统，将 EFI 文件夹拷贝到硬盘 EFI 分区；
+       1. 重新启动，BIOS 选择进入 PE 系统，将 `EFI` 文件夹拷贝到电脑 EFI/ESP 分区；
        2. 使用 [EasyUEFI](https://github.com/wsl540777/Hackintosh-for-Tahoe/releases/download/v26.2.0/EasyUEFI.zip) 添加引导项（[教程](https://www.bilibili.com/opus/872635104279658505)）；
        3. 重新启动，拔掉 U 盘，BIOS 选择硬盘 OpenCore 引导，进入 macOS。
-       4. 使用 [OCAT](https://github.com/ic005k/OCAuxiliaryTools) 或 [OCC](https://mackie100projects.altervista.org/category/opencore-configurator/) 挂载 EFI 分区，禁用或删除 itlwm.kext；下载安装并使用 [OCLP-Mod.pkg](https://github.com/laobamac/OCLP-Mod/releases) 注入声卡和网卡驱动补丁（[教程](https://b23.tv/R7wvPSn)），完成。
+
 * #### 从原有 macOS 升级：
   1. 使用 [OCAT](https://github.com/ic005k/OCAuxiliaryTools) 或 [OCC](https://mackie100projects.altervista.org/category/opencore-configurator/) 挂载 EFI 分区并替换为准备的 EFI；
   2. 重启，执行 Reset NVRAM，在 Windows 或 PE 下使用 [EasyUEFI](https://github.com/wsl540777/Hackintosh-for-Tahoe/releases/download/v26.2.0/EasyUEFI.zip) 重新添加引导项（[教程](https://www.bilibili.com/opus/872635104279658505)）；
   3. 使用 OTA 或镜像安装（推荐使用 [Mist](https://github.com/ninxsoft/Mist)）更新到 Tahoe，初次进入系统时 **⚠️ 不要启用文件保险箱加密**；
-  4. 进入 macOS， 使用 [OCAT](https://github.com/ic005k/OCAuxiliaryTools) 或 [OCC](https://mackie100projects.altervista.org/category/opencore-configurator/) 禁用或删除 itlwm.kext；下载安装并使用 [OCLP-Mod.pkg](https://github.com/laobamac/OCLP-Mod/releases) 注入声卡和网卡驱动补丁（[教程](https://b23.tv/R7wvPSn)），完成。
+
 ### 安装后
 1. **更改键盘按键映射**：`系统设置 > 键盘 > 键盘快捷键 > 修饰键`；
-2. **调整触控板点按方式：** `系统设置 > 触控板 > 光标与点按`，调整为自己熟悉的点按方式；
-3. **开启 HiDPI**（[教程](https://zhuanlan.zhihu.com/p/205279615)，SIP 状态已为注入声卡和网卡驱动设置好，**不用手动更改**）。**⚠️ 不支持的分辨率可能导致花屏**；
-4. **修复耳机电流声**：下载 [ComboJack.zip](https://github.com/hoaug-tran/ComboJack/releases)（适用于 ALC255/256/295/298），打开终端，将解压后 `ComboJack_Installer` 目录下的 `install.sh` 拖到终端中，回车运行，重启；
-   1. **禁止自动挂载**非 macOS 分区（[教程](https://apple.stackexchange.com/questions/310574/how-to-prevent-auto-mounting-of-a-volume-in-macos-high-sierra)），宗卷名称中的空格用 `\040` 代替。如果不清楚文件系统名称，可用 `auto` 代替；
-5. 进入 `系统设置 > 隐私与安全性` **再次检查文件保险箱是否关闭**。**⚠️ 若在初次进入 macOS Tahoe 时不慎选择了启用文件保险箱加密，导致输入密码无法进入系统，可参考[这篇教程](https://imacos.top/2025/07/01/1457-3/)解决问题；如果解密过程卡在 Paused 状态，[这篇教程](https://kextcache.com/filevault-login-issue-fix/)文末有解决方案；**
-6. ⚠️ 本 EFI 中的**显卡缓冲帧补丁**、**CPUFriendDataProvider.kext** 和 **USBMap.kext** 为**机型定制**。**若本机机型或仿冒机型不同，请重新定制**。
-7. ⚠️ 在使用 时间机器备份/还原 或 OTA 更新系统 前**务必使用 OCLP-Mod 暂时删除已安装的系统补丁**，避免造成系统错误无法启动。
+2. **调整触控板点按方式**： `系统设置 > 触控板 > 光标与点按`，调整为自己熟悉的点按方式；
+3. **注入声卡和网卡补丁**：使用 [OCAT](https://github.com/ic005k/OCAuxiliaryTools) 或 [OCC](https://mackie100projects.altervista.org/category/opencore-configurator/) 挂载 EFI/ESP 分区，禁用或删除 `itlwm.kext`；下载安装并使用 [OCLP-Mod](https://github.com/laobamac/OCLP-Mod/releases) 注入驱动补丁（[教程](https://b23.tv/R7wvPSn)），完成。
+4. **开启 HiDPI**（[教程](https://zhuanlan.zhihu.com/p/205279615)，SIP 状态已为声卡和网卡补丁设置好，**请勿更改**）。**⚠️ 不支持的分辨率可能导致花屏**；
+5. **修复耳机电流声**：下载 [ComboJack.zip](https://github.com/hoaug-tran/ComboJack/releases)（适用于 ALC255/256/295/298），打开终端，将解压后 `ComboJack_Installer` 目录下的 `install.sh` 拖到终端中，回车运行，重启；
+6. **禁止自动挂载**非 macOS 分区（[教程](https://apple.stackexchange.com/questions/310574/how-to-prevent-auto-mounting-of-a-volume-in-macos-high-sierra)），宗卷名称中的空格用 `\040` 代替。如果不清楚文件系统名称，可用 `auto` 代替；
+7. 进入 `系统设置 > 隐私与安全性` **再次检查文件保险箱是否关闭**。**⚠️ 若在初次进入 macOS Tahoe 时不慎选择了启用文件保险箱加密，导致输入密码无法进入系统，可参考[这篇教程](https://imacos.top/2025/07/01/1457-3/)解决问题；如果解密过程卡在 `Paused` 状态，[这篇教程](https://kextcache.com/filevault-login-issue-fix/)文末有解决方案；**
+8. ⚠️ 本 EFI 中的**显卡缓冲帧补丁**、**`CPUFriendDataProvider.kext`** 和 **`USBMap.kext`** 为**机型定制**。**若本机机型或仿冒机型不同，请重新定制**。
+9. ⚠️ 在使用 时间机器备份/还原 或 OTA 更新系统 前**务必使用 `OCLP-Mod` 暂时删除已安装的系统补丁**，避免启动时系统崩溃。
 
 ## 推荐工具
 * [Camo Studio](https://camo.com/studio)，访问安卓/iOS 设备摄像头，实现类似连续互通相机功能；
